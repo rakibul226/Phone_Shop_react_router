@@ -1,7 +1,7 @@
 import PhoneCard from "./PhoneCard";
 
 
-const Phones = ({phones}) => {
+const Phones = ({phones}) =>{
    // console.log(phones);
     return (
         <div className="py-10 ">

@@ -1,11 +1,44 @@
-import { Link } from "react-router-dom";
+
+import Swal from "sweetalert2";
 
 const PhoneDetails = ({phone}) => {
   const {id,image,phone_name,brand_name,price} = phone || {}
 
-
   const handleAddToFavorites = ()=> {
-    console.log(phone);
+    //console.log(phone);
+    // localStorage.setItem('test',"rakibul")
+    // localStorage.setItem('test',JSON.stringify([{name:"rakibul"},{name:"sadi"}]))
+    
+    const addToFavoritesArray = [];
+    const favoriteItems = JSON.parse(localStorage.getItem('favorites'))
+    if(!favoriteItems){
+      addToFavoritesArray.push(phone)
+      localStorage.setItem('favorites',JSON.stringify(addToFavoritesArray))
+      Swal.fire({
+        title: "Good job!",
+        text: "Add to favourite",
+        icon: "success"
+      });
+    }
+    else{
+      const isExits = favoriteItems.find((phone) => phone.id === id);  
+      if(!isExits){
+        addToFavoritesArray.push(...favoriteItems,phone)
+        localStorage.setItem('favorites',JSON.stringify(addToFavoritesArray))
+        Swal.fire({
+          title: "Good job!",
+          text: "Add to favourite",
+          icon: "success"
+        });
+      }
+      else{
+        Swal.fire({
+          title: "DUPLICATE",
+          text: "Can't add duplicate item",
+          icon: "error"
+        });
+      }
+    }
   }
 
 
@@ -40,11 +73,6 @@ const PhoneDetails = ({phone}) => {
       Add to Favorite
     </button>
   </div>
-
-  
-
-   
-
 
 </div>
       </div>
